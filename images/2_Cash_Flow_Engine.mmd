@@ -1,0 +1,29 @@
+flowchart LR
+    Depositors((Depositors))
+    Borrowers((Borrowers))
+    
+    subgraph Anchor_Protocol ["Anchor Protocol (The Black Box)"]
+        YieldReserve[("Yield Reserve<br/>(Subsidy Bucket)")]
+        style YieldReserve fill:#ff9999,stroke:#333
+        
+        Income["Income Stream<br/>(12% Interest)"]
+        style Income fill:#99ff99,stroke:#333
+        
+        Expense["Expense Stream<br/>(20% Yield)"]
+        style Expense fill:#ffcccc,stroke:#333
+    end
+    
+    Borrowers -->|Pays 12%| Income
+    Income --> YieldReserve
+    
+    YieldReserve -->|Pays 20%| Expense
+    Expense -->|High APY| Depositors
+    
+    Depositors -->|Deposits UST| Anchor_Protocol
+    
+    subgraph Reality ["The Structural Deficit"]
+        Gap["Deficit = Expense - Income<br/>Funded by burning Equity"]
+        style Gap fill:#ff0000,color:white
+    end
+    
+    YieldReserve -.-> Gap

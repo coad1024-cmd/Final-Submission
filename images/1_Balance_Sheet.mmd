@@ -1,0 +1,31 @@
+flowchart TB
+    subgraph Liabilities ["Liabilities (The Obligations)"]
+        direction TB
+        UST["UST Supply ($18.7B)"]
+        style UST fill:#ff9999,stroke:#333,stroke-width:2px
+        UST_Desc["Zero-Duration Demand Liability<br/>Redeemable for $1.00 of LUNA"]
+        UST --- UST_Desc
+    end
+
+    subgraph Assets ["Assets (The Backing)"]
+        direction TB
+        LUNA["LUNA Market Cap ($40B)"]
+        style LUNA fill:#99ccff,stroke:#333,stroke-width:2px
+        LUNA_Desc["Endogenous Equity<br/>Value depends on UST demand"]
+        
+        BTC["LFG Reserves ($3B)"]
+        style BTC fill:#99ff99,stroke:#333,stroke-width:2px
+        BTC_Desc["Exogenous Reserve<br/>Only 15-20% Coverage"]
+        
+        LUNA --- LUNA_Desc
+        BTC --- BTC_Desc
+    end
+
+    Redemption["Redemption Mechanism<br/>(Mint/Burn)"]
+    style Redemption fill:#ffffcc,stroke:#333,stroke-width:4px
+
+    UST -->|Burn UST| Redemption
+    Redemption -->|Mint LUNA| LUNA
+    
+    linkStyle 0 stroke-width:4px,fill:none,stroke:red;
+    linkStyle 1 stroke-width:4px,fill:none,stroke:red;

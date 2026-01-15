@@ -1,0 +1,5 @@
+{
+    "status": "DEPRECATED - Use Real Data",
+    "redirect": "See collateral_data_v2_real.json for actual on-chain verified data",
+    "note": "This file contained simulated scenario data. Real mainnet data is now available from trove snapshot analysis."
+}

@@ -1,0 +1,16 @@
+{
+    "protocol": "Liquity V1",
+    "timestamp": "2026-01-05T12:27:26Z",
+    "total_tvl_usd": 247113934,
+    "total_collateral_eth": 77770,
+    "hhi": 10000,
+    "composition": [
+        {
+            "asset": "ETH",
+            "type": "Native Crypto",
+            "share": 1.00,
+            "custodial": false
+        }
+    ],
+    "source": "On-Chain Verification (TroveManager.sol)"
+}

@@ -1,0 +1,36 @@
+{
+    "timestamp": "2026-01-05T15:18:01.659Z",
+    "source": "Official Liquity V2 Stats API (https://api.liquity.org/v2/ethereum.json)",
+    "total_sp_deposits": 29632256.345085606,
+    "total_bold_supply": 40399588.00335408,
+    "sp_coverage_ratio": "73.35",
+    "pools": {
+        "WETH": {
+            "sp_deposits_bold": 7971096.173391037,
+            "total_debt": 9322148.5678963,
+            "coverage_ratio": "85.51",
+            "sp_apy": "3.19",
+            "collateral_value_usd": 17851156.730785035,
+            "interest_rate_avg": "3.64"
+        },
+        "wstETH": {
+            "sp_deposits_bold": 19473362.135871734,
+            "total_debt": 26187905.79933486,
+            "coverage_ratio": "74.36",
+            "sp_apy": "4.73",
+            "collateral_value_usd": 100028145.31637582,
+            "interest_rate_avg": "4.69"
+        },
+        "rETH": {
+            "sp_deposits_bold": 2187798.035822835,
+            "total_debt": 4890327.180605834,
+            "coverage_ratio": "44.74",
+            "sp_apy": "1.54",
+            "collateral_value_usd": 15479589.704653613,
+            "interest_rate_avg": "0.92"
+        }
+    },
+    "total_collateral_value": 133358891.75181447,
+    "total_value_locked": 162991148.09690008,
+    "max_sp_apy": "4.73"
+}

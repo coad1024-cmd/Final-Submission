@@ -1,0 +1,23 @@
+{
+    "protocol": "Liquity V2 (BOLD)",
+    "status": "Model Projection",
+    "parameters": {
+        "interest_rate_model": "User-Set",
+        "collateral_types": [
+            "ETH",
+            "wstETH",
+            "rETH"
+        ],
+        "target_peg": "1.00"
+    },
+    "economic_estimates": {
+        "projected_yield": "4.5% - 5.5%",
+        "benchmark_rfr": "5.0%",
+        "expected_retention_rate": "> 80%",
+        "revenue_mechanism": "Interest spread passed to LST stakers / BOLD holders"
+    },
+    "comparison_v1": {
+        "v1_yield": "0%",
+        "v1_retention": "4.3%"
+    }
+}

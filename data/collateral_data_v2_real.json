@@ -1,0 +1,38 @@
+{
+    "status": "Real On-Chain Data",
+    "source": "analysis/Liquity/data/trove_snapshot_mainnet.csv",
+    "timestamp": "2025-12-09T22:57:00Z",
+    "note": "Extracted from V2 mainnet trove snapshot. Only 3 active branches (ETH, WSTETH, RETH) as of snapshot date.",
+    "total_tvl_usd": 13573541.55754712,
+    "total_debt_bold": 689989.0351491802,
+    "hhi": 6658.631396301058,
+    "composition": [
+        {
+            "asset": "ETH",
+            "type": "Native Crypto",
+            "collateral_amount": 611.4339248315679,
+            "tvl_usd": 1926016.8632194388,
+            "share": 0.14189493987650856,
+            "share_percent": "14.19%",
+            "debt_bold": 689989.0351491802
+        },
+        {
+            "asset": "RETH",
+            "type": "LST",
+            "collateral_amount": 3454.066759580288,
+            "tvl_usd": 10880310.292677907,
+            "share": 0.8015822728761801,
+            "share_percent": "80.16%",
+            "debt_bold": 0.0
+        },
+        {
+            "asset": "WSTETH",
+            "type": "LST",
+            "collateral_amount": 243.56012750786505,
+            "tvl_usd": 767214.4016497749,
+            "share": 0.056522787247311336,
+            "share_percent": "5.65%",
+            "debt_bold": 0.0
+        }
+    ]
+}

@@ -1,0 +1,108 @@
+{
+    "total_dai_supply": 5360000000,
+    "total_collateral_usd": 5363000000,
+    "over_collateralization_ratio": 100.05597014925374,
+    "collateral_breakdown": {
+        "ETH": {
+            "amount_usd": 1400000000,
+            "share_pct": 26.1,
+            "type": "crypto",
+            "counterparty_risk": "low",
+            "custodian": "decentralized"
+        },
+        "WBTC": {
+            "amount_usd": 150000000,
+            "share_pct": 2.8,
+            "type": "crypto",
+            "counterparty_risk": "medium",
+            "custodian": "BitGo (centralized bridge)"
+        },
+        "USDC": {
+            "amount_usd": 1765000000,
+            "share_pct": 32.91,
+            "type": "stablecoin",
+            "counterparty_risk": "high",
+            "custodian": "Circle/Coinbase"
+        },
+        "US_Treasury_Bonds": {
+            "amount_usd": 1140000000,
+            "share_pct": 21.26,
+            "type": "RWA",
+            "counterparty_risk": "medium",
+            "custodian": "various_banks"
+        },
+        "Corporate_Bonds": {
+            "amount_usd": 200000000,
+            "share_pct": 3.73,
+            "type": "RWA",
+            "counterparty_risk": "medium",
+            "custodian": "various_banks"
+        },
+        "USDC_Coinbase_Prime": {
+            "amount_usd": 500000000,
+            "share_pct": 9.32,
+            "type": "RWA",
+            "counterparty_risk": "high",
+            "custodian": "Coinbase"
+        },
+        "Other_RWA": {
+            "amount_usd": 208000000,
+            "share_pct": 3.88,
+            "type": "RWA",
+            "counterparty_risk": "medium",
+            "custodian": "various"
+        }
+    },
+    "aggregate_by_type": {
+        "RWA": {
+            "amount_usd": 2048000000,
+            "share_pct": 38.19
+        },
+        "stablecoin": {
+            "amount_usd": 1765000000,
+            "share_pct": 32.91
+        },
+        "crypto": {
+            "amount_usd": 1550000000,
+            "share_pct": 28.9
+        }
+    },
+    "concentration_metrics": {
+        "hhi": 2340.12,
+        "concentration_level": "Moderately Concentrated",
+        "cr3_pct": 80.27,
+        "cr5_pct": 93.47
+    },
+    "counterparty_exposure": {
+        "Circle_Coinbase_USDC": {
+            "amount_usd": 1765000000,
+            "share_pct": 32.91,
+            "risk": "Critical - single point of failure"
+        },
+        "Coinbase_Prime": {
+            "amount_usd": 500000000,
+            "share_pct": 9.32,
+            "risk": "High - exchange custody risk"
+        },
+        "Total_Circle_Coinbase": {
+            "amount_usd": 2265000000,
+            "share_pct": 42.23,
+            "risk": "CRITICAL - systemic concentration"
+        },
+        "BitGo_WBTC": {
+            "amount_usd": 150000000,
+            "share_pct": 2.8,
+            "risk": "Medium - wrapped asset custodian"
+        },
+        "Traditional_Banking_RWA": {
+            "amount_usd": 2048000000,
+            "share_pct": 38.19,
+            "risk": "Medium - diversified across multiple banks"
+        }
+    },
+    "metadata": {
+        "analysis_date": "2025-11-25T20:11:47.404361",
+        "data_source": "MakerDAO/Sky ecosystem - September 2025",
+        "note": "Data based on publicly available information and estimates"
+    }
+}

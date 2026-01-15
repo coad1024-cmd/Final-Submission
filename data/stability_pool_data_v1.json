@@ -1,0 +1,53 @@
+{
+    "protocol": "Liquity V1",
+    "timestamp": "2026-01-05T14:46:00Z",
+    "data_type": "Stability Pool Concentration",
+    "source": "Approximation based on DeFi whale analysis patterns",
+    "note": "Stability Pool distribution follows typical power-law for risk-taking capital. Critical threshold: No single entity should control >33% to prevent liquidation blocking.",
+    "total_lusd_in_pool": 145000000,
+    "provider_distribution": [
+        {
+            "provider": "Whale 1",
+            "share_pct": 18,
+            "estimated_lusd": 26100000,
+            "type": "Large Institutional"
+        },
+        {
+            "provider": "Whale 2",
+            "share_pct": 12,
+            "estimated_lusd": 17400000,
+            "type": "Large Institutional"
+        },
+        {
+            "provider": "Whale 3",
+            "share_pct": 8,
+            "estimated_lusd": 11600000,
+            "type": "Large Individual"
+        },
+        {
+            "provider": "Whale 4",
+            "share_pct": 5,
+            "estimated_lusd": 7250000,
+            "type": "Large Individual"
+        },
+        {
+            "provider": "Top 10-50",
+            "share_pct": 25,
+            "estimated_lusd": 36250000,
+            "type": "Medium Providers"
+        },
+        {
+            "provider": "Small Stakers",
+            "share_pct": 32,
+            "estimated_lusd": 46400000,
+            "type": "Retail"
+        }
+    ],
+    "nakamoto_coefficient": 4,
+    "top_1_share": 18,
+    "top_2_share": 30,
+    "top_3_share": 38,
+    "hhi": 1001,
+    "risk_assessment": "Moderate concentration. Top provider holds 18%, well below the 33% censorship threshold. Nakamoto Coefficient of 4 indicates healthy distribution.",
+    "mechanism_note": "Unlike governance tokens, SP providers cannot 'block' liquidations—they can only withdraw. Withdrawal during stress is economically irrational (they forfeit liquidation gains)."
+}

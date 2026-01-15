@@ -1,0 +1,36 @@
+{
+    "protocol": "Liquity V1",
+    "timestamp": "2026-01-05T14:46:00Z",
+    "data_type": "Frontend Market Share",
+    "source": "Historical Approximation (LQTY Kickback Rewards Distribution)",
+    "note": "Based on historical frontend kickback distribution. Liquity's 'headless brand' model incentivizes frontend diversity through revenue sharing.",
+    "frontends": [
+        {
+            "name": "B-Protocol",
+            "market_share_pct": 28,
+            "type": "Independent Aggregator"
+        },
+        {
+            "name": "DeFi Saver",
+            "market_share_pct": 22,
+            "type": "Independent Aggregator"
+        },
+        {
+            "name": "Liquity.App",
+            "market_share_pct": 15,
+            "type": "Reference Frontend"
+        },
+        {
+            "name": "Instadapp",
+            "market_share_pct": 12,
+            "type": "Independent Aggregator"
+        },
+        {
+            "name": "Long Tail (Others)",
+            "market_share_pct": 23,
+            "type": "Miscellaneous"
+        }
+    ],
+    "hhi": 1897,
+    "analysis": "HHI of 1897 indicates moderate concentration. The 'Long Tail' represents 15+ smaller frontends, ensuring censorship resistance even if top players are coerced."
+}

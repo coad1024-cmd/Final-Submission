@@ -1,0 +1,30 @@
+flowchart TD
+    subgraph Original ["Original Terra Mechanism"]
+        direction TB
+        UST_Sell["UST Selling"] -->|Burn UST| Mint_LUNA["Mint LUNA"]
+        Mint_LUNA -->|Supply Explosion| LUNA_Crash["LUNA Price Crash"]
+        LUNA_Crash -->|Panic| UST_Sell
+    end
+
+    subgraph Algorithmic ["Algorithmic Defenses"]
+        direction TB
+        S1["S1: Circuit Breakers"]
+        S1 -->|Rate-limit| Mint_LUNA
+        S2["S2: Minting Caps"]
+        S2 -->|Hard cap per block| Mint_LUNA
+    end
+
+    subgraph Hybrid ["Hybrid Approaches"]
+        direction TB
+        S3["S3: USDT Reserve Pool"]
+        S3 -->|Market buyback| UST_Sell
+        S4["S4: BTC Reserve Pool"]
+        S4 -->|Absorb excess| LUNA_Crash
+    end
+
+    style S1 fill:#90EE90,stroke:#228B22,stroke-width:2px
+    style S2 fill:#90EE90,stroke:#228B22,stroke-width:2px
+    style S3 fill:#87CEEB,stroke:#4169E1,stroke-width:2px
+    style S4 fill:#87CEEB,stroke:#4169E1,stroke-width:2px
+    style UST_Sell fill:#ff9999,stroke:red,stroke-width:2px
+    style LUNA_Crash fill:#ff9999,stroke:red,stroke-width:2px

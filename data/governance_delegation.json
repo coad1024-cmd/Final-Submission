@@ -1,0 +1,102 @@
+{
+    "total_delegated_mkr": 3658.5463666585383,
+    "total_delegates": 143,
+    "active_delegates": 90,
+    "mean_delegation_mkr": 40.650479499380765,
+    "median_delegation_mkr": 0.11893809576981618,
+    "top_delegate_shares": {
+        "top_1_mkr": 3167.1124351604763,
+        "top_1_share_pct": 86.56750845153553,
+        "top_5_mkr": 3628.975271494262,
+        "top_5_share_pct": 99.19172555980794,
+        "top_10_mkr": 3640.4301809751364,
+        "top_10_share_pct": 99.50482558186224
+    },
+    "concentration": {
+        "gini_coefficient": 0.9821633814999782
+    },
+    "effective_control": {
+        "33% (Blocking Minority)": {
+            "threshold_pct": 33,
+            "delegates_needed": 1,
+            "actual_pct": 86.56750845153553
+        },
+        "51% (Simple Majority)": {
+            "threshold_pct": 51,
+            "delegates_needed": 1,
+            "actual_pct": 86.56750845153553
+        },
+        "67% (Supermajority)": {
+            "threshold_pct": 67,
+            "delegates_needed": 1,
+            "actual_pct": 86.56750845153553
+        }
+    },
+    "top_10_delegates": [
+        {
+            "rank": 1,
+            "address": "0x16787f838d6562d7a0337ff65130b6a9a1255c77",
+            "delegated_mkr": 3167.1124351604763,
+            "share_pct": 86.56750845153553
+        },
+        {
+            "rank": 2,
+            "address": "0x1d07f15ab8c3c015c7b312759ddd858b0f1d8e72",
+            "delegated_mkr": 372.6219809655607,
+            "share_pct": 10.184973582988581
+        },
+        {
+            "rank": 3,
+            "address": "0x969c91c5ac11d4d1077a6aaf3d2ba617906543cc",
+            "delegated_mkr": 50.0,
+            "share_pct": 1.3666630128202124
+        },
+        {
+            "rank": 4,
+            "address": "0x34c9be51d7a1ff4db77abf48a73601e4b50a4645",
+            "delegated_mkr": 26.16236310317565,
+            "share_pct": 0.7151026796216481
+        },
+        {
+            "rank": 5,
+            "address": "0x53222d00ffbff48bd74bddde5592b1b98793bb07",
+            "delegated_mkr": 13.078492265048986,
+            "share_pct": 0.3574778328419539
+        },
+        {
+            "rank": 6,
+            "address": "0xdffa28aaabf9e6a07e19fdf3a9b94fdc93a039f1",
+            "delegated_mkr": 5.007333582779649,
+            "share_pct": 0.13686675200874926
+        },
+        {
+            "rank": 7,
+            "address": "0x8e4fafef5bf61f09654adeb46e6bc970bcd42c52",
+            "delegated_mkr": 1.8386611352093256,
+            "share_pct": 0.05025660333201218
+        },
+        {
+            "rank": 8,
+            "address": "0x3c4c8dba0569ce1b0210aec14f9604c63ff80383",
+            "delegated_mkr": 1.6069800644192445,
+            "share_pct": 0.04392400432762448
+        },
+        {
+            "rank": 9,
+            "address": "0x44f703d198d8de5504075170bceecd3fb4dd0f1b",
+            "delegated_mkr": 1.5352114003455613,
+            "share_pct": 0.04196233275424404
+        },
+        {
+            "rank": 10,
+            "address": "0xa963cc9e4f1dc187d561830ee299040c582e2bfc",
+            "delegated_mkr": 1.4667232981210712,
+            "share_pct": 0.04009032963167484
+        }
+    ],
+    "metadata": {
+        "analysis_date": "2025-11-25T19:57:14.940902",
+        "data_source": "Real MakerDAO delegate data from governance API",
+        "data_file": "analysis/makerdao/governance/data/delegates_with_delegators.json"
+    }
+}

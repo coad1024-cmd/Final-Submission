@@ -1,0 +1,20 @@
+flowchart TD
+    subgraph Expansion ["The Upside - Virtuous Cycle"]
+        Demand_Up["UST Demand Increases"] -->|Burn LUNA| Supply_Down["LUNA Supply Decreases"]
+        Supply_Down -->|Price Up| Price_Up["LUNA Price Increases"]
+        Price_Up -->|FOMO| More_Demand["More UST/LUNA Demand"]
+        More_Demand --> Demand_Up
+    end
+    
+    subgraph Contraction ["The Downside - Death Spiral"]
+        direction TB
+        Sell_UST["UST Selling - Peg Drops"] -->|Mint LUNA| Supply_Up["LUNA Supply Explodes"]
+        Supply_Up -->|Dilution| Price_Down["LUNA Price Crashes"]
+        Price_Down -->|Panic| Sell_More["Sell More UST and LUNA"]
+        Sell_More --> Sell_UST
+        
+        Oracle_Lag["Oracle Lag - 30s"] -->|Arbitrage Gap| Supply_Up
+        style Oracle_Lag fill:#ff9999,stroke:red,stroke-width:2px
+    end
+    
+    Expansion -.->|Confidence Lost| Contraction
