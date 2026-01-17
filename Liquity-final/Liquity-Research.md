@@ -97,7 +97,6 @@ The system doesn't try to prevent gaming. It taxes it into unprofitability.
 ## Current State: January 2026
 
 The numbers tell an interesting story:
-<small>Source: Liquity V2 Analytics</small>
 
 | Metric | Q1 2025 | Q2 2025 | Q3 2025 | Q4 2025 | 2025 Total |
 |:-------|:--------|:--------|:--------|:--------|:-----------|
@@ -148,7 +147,9 @@ This is the fault line.
 - **rETH (12% share):** Controlled by Rocket Pool governance.
 
 ![Collateral Composition](collateral_composition.png)
-<small>*Source: [Liquity V2 Analytics](https://dune.com/liquity/liquity-v2-protocol-analysis)*</small>
+
+> **Concentration Risk (HHI): 0.56 (High)**
+> *Calculated: $0.72^2 (\text{wstETH}) + 0.16^2 (\text{WETH}) + 0.12^2 (\text{rETH}) \approx 0.56$. Any score $>0.25$ indicates high concentration.*
 
 Under the DeFiScan framework, this **External Dependency** prevents a perfect score. The **`Standard`** architecture is robust, but the **`Assets`** are administratively upgradable.
 
@@ -194,7 +195,7 @@ In a space where most protocols optimize for TVL velocity, Liquity V2 optimizes 
 
 ---
 
-References:
+## References
 
 1. Liquity V2 Technical Documentation (2025)
 2. DefiLlama Protocol Analytics

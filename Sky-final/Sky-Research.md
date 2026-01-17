@@ -98,6 +98,9 @@ Sky exposes DeFi’s core contradiction in its purest form: **the stronger the c
 | **Lending Protocols** | $707M | 14.1% |
 <small>Source: [DefiLlama TVL](https://defillama.com/protocol/sky), [Blockworks](https://blockworks.co/news/sky-pivots-beyond-treasuries)</small>
 
+> **Concentration Risk (HHI): 0.29 (Moderate-High)**
+> *Calculated: $0.44^2 (\text{RWA}) + 0.28^2 (\text{ETH}) + 0.14^2 (\text{Lending}) + 0.08^2 (\text{USDC}) \approx 0.29$.*
+
 From an engineering standpoint, the system is exceptional. The liquidation stack has survived Black Thursday, USDC de-pegs, and violent volatility regimes. The **`Vat`** is immutable. The **`Dog`**/**`Clip`** pipeline clears liquidations atomically. The oracle system is deliberately conservative. On-chain, Sky is hard to break.
 
 ![Sky Decentralization Radar](sky_decentralization_radar.png)
