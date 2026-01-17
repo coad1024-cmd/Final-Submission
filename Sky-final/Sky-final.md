@@ -267,8 +267,11 @@ To monitor the "Vital Signs" of the RWA-pivot, we track four core metrics that d
 > [!NOTE]
 > **Growth Narrative (2025 vs. 2026)**:
 >
-> - **2025 Actuals ($113M)**: DefiLlama data confirms Sky generated **$113M in realized earnings** for FY2025 (Revenue $409M - Expenses $296M).
-> - **2026 Run-Rate ($168M)**: SFF projections for Jan 2026 show a **+48% profit growth** trend, driven by the completed rotation into higher-yield RWA Allocations and the launch of USDS.
+> ![Sky Income Statement](sky_income_statement_defillama.png)
+> <small>*Fig 2.3: Realized Income Statement (DefiLlama). The ledger confirms Sky generated **$113M in Net Earnings** for FY2025 (Column 2). The 2026 projections ($168M) represent a continuation of this profitability trend as the protocol rotates into higher-yield RWAs.*</small>
+>
+> - **2025 Actuals ($113M)**: Verified by on-chain data (Revenue $409M - Expenses $296M).
+> - **2026 Run-Rate ($168M)**: SFF projections show a **+48% profit growth** trend.
 
 1. **Net Profitability ($168M)**: This figure is verified by **Jan 2026 SFF (Strategic Finance)** reports. Sky is currently one of the most profitable protocols in DeFi.
 2. **Surplus Buffer**: The "Vow" balance acts as the first line of defense against RWA liquidity shocks.
