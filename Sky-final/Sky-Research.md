@@ -76,7 +76,7 @@ The **mechanics** work like a bank: users lock collateral and pay a **stability 
 The **`Jug`** contract enforces this at the smart contract level. It updates the **`rate`** accumulator for each collateral type (**`ilk`**) by calling **`drip()`**, which calculates accrued interest since the last **`drip`** and mints the corresponding USDS to the **`Vow`**.
 **The formula:**
 
-$$\text{rate}_{\text{new}} = \text{rate}_{\text{old}} \times (1 + \text{duty})^{(\text{now} - \text{last\_update})}$$
+$$\text{rate}_{\text{new}} = \text{rate}_{\text{old}} \times (1 + \text{duty})^{(\text{now} - \text{last-update})}$$
 
 Where **`duty`** is the per-second stability fee for that **`ilk`**. This is how Sky's ~$121M annual revenue materializes on-chain — not through external API calls, but through continuous debt accumulation math.
 
