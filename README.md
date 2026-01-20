@@ -4,7 +4,9 @@
 **Subject**: Comparative Analysis of Decentralized & Hybrid Solvency Models
 
 ---
-
+> **Navigation note:**
+This portfolio is organized in a GitBook-style structure, so the reader does not need to browse the underlying folder tree directly. All sections and artifacts are accessible from this index file, and you can navigate the full submission simply by following the embedded hyperlinks
+>
 ## 📂 Submission Structure
 
 This portfolio contains the final technical reports and design documents for stablecoin research.
