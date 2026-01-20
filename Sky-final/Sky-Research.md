@@ -38,7 +38,7 @@ Black Thursday 2020 showed what failure looks like. ETH crashed 43% in hours, ga
 
 ![Black Thursday](black_thursday_scissors.png)
 
-Liquidation 2.0 is the direct response. The **`Dog`** contract calls **`bark()`** to seize collateral and hand it to the **`Clip`** for liquidation. The **`Clip`** runs a Dutch auction where price decays over time until a keeper finds it profitable to call **`take()`**. Settlement is atomic — keepers flash-loan USDS, buy discounted **`Ink`**, swap it on a DEX, and repay in a single transaction. No capital lockup. No multi-block exposure. The system clears in milliseconds. Solvency is execution throughput, not just asset value.
+Liquidation 2.0 is the direct response. The **`Dog`** contract calls **`bark()`** to seize collateral and hand it to the **`Clip`** for liquidation. The **`Clip`** runs a Dutch auction where price decays over time until a keeper finds it profitable to call **`take()`**. Settlement is atomic — keepers flash-loan USDS, buy discounted **`Ink`**, swap it on a DEX, and repay in a single transaction. No capital lockup. No multi-block exposure. The system clears in milliseconds.
 
 There's one deliberate bottleneck: the **`Oracle Security Module`** (OSM). Price feeds are delayed by one hour via the **`hop`** parameter before affecting the **`Vat`**. If an oracle gets corrupted, governance has 60 minutes to freeze it via **`stop()`** or **`void()`**. The trade-off is the "dam burst" effect — during genuine crashes, underwater vaults can't be liquidated until the OSM catches up, creating concentrated execution pressure when the delayed price finally updates.
 
@@ -46,6 +46,8 @@ The design choice is **security over reactivity**. Without a delay, an attacker 
 
 ![OSM Dam Burst Effect](osm_dam_burst.png)
 <small>The diagram below illustrates this pipeline: Chronicle oracles aggregate price feeds through the Medianizer, which the OSM delays by 1 hour before updating the **`spot`** price in the Vat. During genuine crashes, the real market price drops continuously while the OSM price remains stale — when it finally updates, all accumulated underwater vaults become liquidatable simultaneously.</small>
+
+**Binding constraint:** execution throughput — the system’s ability to liquidate fast enough under adversarial market conditions.
 
 ---
 
@@ -74,15 +76,15 @@ The **mechanics** work like a bank: users lock collateral and pay a **stability 
 The **`Jug`** contract enforces this at the smart contract level. It updates the **`rate`** accumulator for each collateral type (**`ilk`**) by calling **`drip()`**, which calculates accrued interest since the last **`drip`** and mints the corresponding USDS to the **`Vow`**.
 **The formula:**
 
->$$\text{rate}_{\text{new}} = \text{rate}_{\text{old}} \times (1 + \text{duty})^{(\text{now} - \text{last\_update})}$$
+$$\text{rate}_{\text{new}} = \text{rate}_{\text{old}} \times (1 + \text{duty})^{(\text{now} - \text{last\_update})}$$
 
 Where **`duty`** is the per-second stability fee for that **`ilk`**. This is how Sky's ~$121M annual revenue materializes on-chain — not through external API calls, but through continuous debt accumulation math.
 
 The risk is obvious: **Rate Shock**. Sky's profit margin has historically been a derivative of the T-Bill/SSR spread. If the Fed cuts rates to 2%, T-Bill yield compresses. Sky is actively hedging this: Spark's $100M allocation to USCC (crypto carry) generates 9%+ yields uncorrelated to Fed policy. But the hedge is nascent — most RWA exposure remains rate-sensitive.
 
-> **Builder Opportunity (Yield Aggregation Layer):** Spark built USCC integration for rate hedging. The opportunity now is **composability** — unified vaults that auto-rebalance across T-Bills, restaking, basis trades, and LP fees based on rate environment. Think Yearn for institutional stablecoin treasuries.
+> This architecture naturally favors a composability layer above Spark — unified treasury vaults that dynamically rebalance across T-Bills, basis trades, restaking yields, and on-chain lending as rate regimes shift. As Sky’s balance sheet diversifies, static allocation becomes a liability rather than a safeguard.
 
-But this optimization for yield and solvency came at a cost. To become a bank, Sky had to centralize decision-making.
+**Binding constraint:** rate spread durability — sustaining positive carry across changing macro regimes without eroding solvency.
 
 ---
 
@@ -106,13 +108,12 @@ From an engineering standpoint, the system is exceptional. The liquidation stack
 ![Sky Decentralization Radar](sky_decentralization_radar.png)
 <small>*Figure 1: Sky's GOCE profile — strong on Operational (O), weak on Collateral (C) and Emergency (E) due to RWA dependence.*</small>
 
-But decentralization is not an engineering question. It is a trust question.
+Decentralization, at Sky’s scale, is not an engineering problem.
+It is an autonomy problem.
 
-The DeFiScan framework makes this explicit. Sky scores cleanly on **Chain risk** (Ethereum L1) and **Accessibility**. Yet none of this is decisive. The binding constraints sit elsewhere.
+**Autonomy is the fault line.** Roughly 40–45% of Sky’s backing (RWAs, tokenized treasury funds, custody-dependent stablecoins) depends on trustees and U.S. courts. A single regulatory action can impair solvency without violating a single on-chain invariant. Under DeFiScan, this is the dominant risk category — not because the protocol is weak, but because its solvency depends on external actors it cannot control or compel.
 
-**Autonomy is the fault line.** Roughly 40–45% of Sky’s backing (RWAs, tokenized treasury funds, custody-dependent stablecoins) depends on trustees and U.S. courts. A single regulatory action can impair solvency without violating a single on-chain invariant. Under DeFiScan, this is unambiguously **High Autonomy risk**.
-
-**Exit windows are no better.** Oracle attacks are buffered by the OSM delay, but governance and custody shocks are not. Emergency Shutdown has been replaced with surgical, delegate-mediated controls. If a major RWA partner freezes redemptions, users cannot permissionlessly exit. This is **High Exit Window risk**.
+**Exit windows are no better.** Oracle attacks are buffered by the OSM delay, but governance and custody shocks are not. Emergency Shutdown has been replaced with surgical, delegate-mediated controls. If a major RWA partner freezes redemptions, users cannot permissionlessly exit. This is **High Exit Window risk**. Autonomy that disappears precisely when it is needed most is not partial autonomy — it is conditional autonomy.
 
 **Governance concentration compounds both.** Three Ranked Delegates control **~65 billion SKY** votes (verified on-chain):
 
@@ -124,15 +125,19 @@ The DeFiScan framework makes this explicit. Sky scores cleanly on **Chain risk**
 
 Combined, they hold **~88% of active delegated power**. This is not apathy — it is functional centralization. The system moves quickly because decision-making is narrow. That speed is an advantage in crises, but it is also a trust assumption.
 
+> At this level of concentration, governance ceases to be a coordination problem and becomes an operational dependency, incentivizing off-chain reputation systems, social slashing mechanisms, and informal accountability structures rather than on-chain voting reform.
+
 Put together, the classification is unavoidable: **Stage 0 (Full Training Wheels)**.
 
 > *Definition: "Stage 0" implies a system where the operator (or delegates) can effectively upgrade the system or seize assets, preventing users from exiting permissionlessly during a censorship event.*
 
-Not because Sky is fragile — but because it is institutional. Sky survived by abandoning the premise that code alone should rule. It replaced oracle risk with custody risk and permissionlessness with execution certainty. What emerged is not a DeFi primitive, but a **shadow bank running on decentralized rails**.
+Not because Sky is fragile — but because it is institutional. It replaced oracle risk with custody risk and permissionlessness with execution certainty. What emerged is not a DeFi primitive, but a **shadow bank running on decentralized rails**.
 
 The code is trustless.
 The collateral is not.
 And the gap between the two is where Sky lives.
+
+**Binding constraint:** autonomy — solvency depends on actors and jurisdictions the protocol cannot control.
 
 ---
 
@@ -142,34 +147,30 @@ Sky's architectural response to centralization risk is **SubDAOs** (now "Stars")
 
 However, scaling this model reveals a critical infrastructure gap. Sky has released the *Endgame Toolkit* — a set of raw smart contracts — but lacks the tooling to make them usable. Furthermore, official Sky SubDAOs are **governance-gated**; you cannot just "launch" one without MKR approval.
 
-This limits the internal market but exposes a massive external one. Most major DAOs (Aave, Uniswap, Compound) face the same "monolithic scaling" problem Sky just solved. They want to franchise risk but lack the complex engineering to do it.
+Most major DAOs (Aave, Uniswap, Compound) face the same "monolithic scaling" problem Sky just solved. They want to franchise risk but lack the complex engineering to do it.
 
-> **Builder Opportunity (The Fractal Scaling Stack):** Don't just build for Sky — **export Sky's architecture**. Build the "DAO-in-a-Box" framework that lets *any* protocol deploy their own SubDAOs using the **modular Endgame model**. By abstracting Sky's verified contracts into a **"Universal SubDAO OS"** (deployment factories, cross-chain fleet management, and consolidated treasury dashboards), a dev shop can sell the "Endgame" as a product to the entire Web3 market, not just the Sky ecosystem.
+> Sky’s Endgame model exposes a broader infrastructure gap: fractal governance tooling does not yet exist as a product. While Sky can gate official SubDAOs through governance, most large DAOs face the same scaling problem without the engineering capacity to solve it internally. The Endgame architecture is therefore less a Sky-specific solution than a generalizable operating system for institutional DAOs.
+
+**Binding constraint:** coordination complexity — scaling governance faster than trust can be socially established.
 
 ---
 
 ## The Bottom Line
 
-Sky is the most successful stablecoin experiment in DeFi history. It pioneered collateralized stablecoins, survived Black Thursday, pivoted to RWAs before anyone else, and became profitable at scale.
+Sky did not centralize because it failed to uphold its principles.
+It centralized because, beyond a certain scale, execution becomes the binding constraint.
 
-It also abandoned nearly every principle it started with. The "trustless money" protocol now requires trusting:
+Once RWAs entered the balance sheet, decentralization ceased to be the objective function. Custody, governance concentration, and jurisdictional exposure were no longer risks to be minimized — they became structural requirements for operating at scale.
 
-- 5 governance delegates not to rug
-- RWA custodians not to freeze assets
-- Circle not to blacklist the PSM
-- The Fed not to crash rates
+This outcome was not the result of bad decisions or ideological drift. It was the only stable equilibrium available to a system optimizing for solvency, liquidity, and execution certainty under real-world constraints. At small scale, protocols can afford to optimize for purity. At institutional scale, systems stop optimizing for ideology and begin optimizing for control over failure modes.
 
-These aren't bugs. They're features of the strategy that worked. Sky won by becoming a better bank than banks — one that runs on Ethereum instead of SWIFT.
+**Sky did not abandon DeFi.
+DeFi simply stopped being sufficient.**
 
-The trade-offs are explicit:
+What emerged is not a broken protocol, but a new class of financial system: a **shadow bank** running on decentralized rails, where the code is trustless, the collateral is not, and the gap between the two is the price of survival.
 
-- **Centralization** for scale
-- **RWA dependency** for sustainable yield
-- **Governance plutocracy** for execution speed
-
-Is this still DeFi? That's a theological question. What's undeniable: Sky is profitable, liquid, and not going anywhere.
-
-The question isn't whether this work will be replicated. It's whether the replicators can avoid the same centralization trap — or whether the trap is the point.
+The question is no longer whether this model works — it already does.
+The real question is whether future systems can escape the same gravitational pull, or whether centralization at scale is not a deviation, but the destination.
 
 ---
 

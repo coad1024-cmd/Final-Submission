@@ -36,6 +36,8 @@ The safety thresholds are tiered. At the individual level, each Trove must maint
 
 Oracles follow the same paranoid logic. WETH uses Chainlink's ETH/USD — straightforward. But LSTs are trickier: wstETH synthesizes the market price with Lido's internal exchange rate. rETH goes further — a dual-check that compares market prices against Rocket Pool's official rate and always picks the lower value. If a de-peg happens, the system doesn't guess or average. It assumes the worst. Speed costs you collateral value here. That's the trade-off: conservative pricing protects the protocol at the borrower's expense.
 
+**Binding constraint:** contagion isolation — capital efficiency is deliberately sacrificed to ensure that failure in one branch cannot propagate to others.
+
 ---
 
 ## The Redemption Trade-off
@@ -48,9 +50,9 @@ Federated architecture creates one meaningful friction point: **redemptions**. W
 
 Redemptions are routed proportionally to exposure. The formula prioritizes **absolute dollar liability** over relative health: a branch with \$10M unbacked is drained before one with $10k unbacked, regardless of percentages. This utilitarian approach protects the peg by targeting the deepest pools of risk first.
 
-But this is what I like to call the **Uncertainty Tax**. For large redemptions, it introduces execution risk due to **state drift** — pool depths can change between transaction submission and execution. You submit expecting 50/50 WETH/rETH; a bot front-runs you with a massive SP deposit; you land with 100% rETH. For institutional-scale redeemers hedging specific exposures, this unpredictability is a deal-breaker.
+This introduces an **uncertainty tax**.For large redemptions, it introduces execution risk due to **state drift** — pool depths can change between transaction submission and execution. You submit expecting 50/50 WETH/rETH; a bot front-runs you with a massive SP deposit; you land with 100% rETH. For institutional-scale redeemers hedging specific exposures, this unpredictability is a deal-breaker.
 
-> **Builder Opportunity (Redemption Routing):** The core issue isn't visibility (dashboards exist), but state drift. Build **Intent-Based Routing** contracts: wrappers that let redeemers specify minimum acceptable collateral mixes, automatically reverting if the "race condition" goes against them. This moves complexity from the user to the solver. First-mover advantage is significant — institutional redeemers will pay for predictability.
+> This creates a natural pressure point for execution-layer abstractions: redemption wrappers that enforce collateral composition constraints or revert on adverse state drift. Predictability becomes a service, not a protocol guarantee.
 
 ---
 
@@ -58,20 +60,24 @@ But this is what I like to call the **Uncertainty Tax**. For large redemptions, 
 
 The federated model means you can add cbETH tomorrow, sfrxETH next month, EigenLayer restaking tokens next year — and each new asset extends the system's reach *without diluting its core safety properties*.
 
-> **Builder Opportunity:** Every new LST branch needs custom oracle integration, risk parameter calibration,risk modeling, and frontend support. First-movers on new collateral types capture disproportionate liquidity.
+> Each additional collateral branch introduces a fixed set of non-negotiable requirements: bespoke oracle construction, collateral-specific risk calibration, liquidation parameterization, and interface support. These are not optional integrations — they are the cost of preserving isolation.
+
+As a result, expansion under a federated solvency model is lumpy rather than smooth. Liquidity does not diffuse evenly across collateral types; it concentrates where the supporting infrastructure is mature. This is not a growth bottleneck, but a deliberate throttle that prevents under-specified assets from importing risk into the system.
 
 Unlike conventional multi-collateral frameworks where diversification often leads to cumulative risk, Liquity V2’s architecture ensures that expansion results in strict risk compartmentalization. By isolating each collateral type into its own branch, the protocol transforms growth from a potential liability into a purely additive benefit.
 
-Once solvency is modular at the collateral level, the next pressure point is geography — chains, not assets L2 expansion is inevitable. The question is *how*. Simple token bridging provides BOLD liquidity across chains, but it creates cross-chain dependencies — if the bridge gets exploited, the "isolated" L2 becomes a contagion vector. The robust path is **L2-native branches**: deploy the full branch architecture (Troves, **`Stability Pool`**, liquidations) directly on each L2, using asynchronous message passing to coordinate BOLD supply without sharing risk.
+> Once solvency is modular at the collateral level, the next pressure point is geography rather than assets. Simple bridging reintroduces shared failure modes, turning cross-chain liquidity into a contagion vector. The only architecture consistent with federated solvency is full branch replication at the L2 level, with coordination occurring at the messaging layer rather than the balance sheet.
 
-> **Builder Opportunity (Multi-Chain Infrastructure):** Unified L2 branches — same BOLD, same system, different chain — don't exist yet. Building this requires L2-specific oracles, cross-chain message relayers to sync with mainnet, and local frontends. Whoever architects this owns the liquidity moat before fragmentation sets in.
+**Binding constraint:** predictability — redemption routing prioritizes system-wide risk isolation over execution certainty for individual redeemers.
+
 ---
 
 ## The Economic Engine
 
 Most stablecoin yield comes from the outside world. Maker's DSR? T-bill returns. Real yield, but also TradFi dependency, regulatory surface, custody risk.
 
-Liquity V2 generates yield **entirely endogenously** — no RWAs, no counterparties, no governance setting rates. The mechanism is what I call **"yield via pain"**: a self-regulating interest rate market that turns borrower competition into protocol revenue.
+Liquity V2 generates yield **entirely endogenously** — no RWAs, no counterparties, no governance setting rates. The mechanism is **“yield via pain”**: borrower competition over redemption priority is the sole source of yield.
+.
 
 Here's how it works: Borrowers open Troves, lock collateral, and *choose their own interest rate*. Interest accrues simply and (non-compounding), minted as fresh BOLD at the system level.**75% flows to **`Stability Pool`** depositors**; 25% to Protocol Incentivized Liquidity (PIL). Redemptions target lowest-rate Troves first — so borrowers bid rates up to avoid the hit. The **emergent market rate** reflects true leverage cost, no governance required.
 
@@ -81,7 +87,7 @@ Under the hood, the protocol uses a gas-efficient "bucket accumulator" pattern: 
 
  Depositing into the **`Stability Pool`** is "raw" — users must manually claim their BOLD interest and collateral gains (ETH/LSTs from liquidations), manually sell them, and manually re-deposit if they want to compound. Idle capital earns nothing during calm periods. There's no native optimization layer.
 
-> **Builder Opportunity (The Basis Vault):** "Auto-compounding" is a feature, not a product. The real opportunity is **Delta-Neutral Basis Trading**. Build a vault that borrows BOLD against ETH, swaps BOLD to stablecoins to farm yield elsewhere (or arbs the peg), all while remaining delta-neutral. This turns the Stability Pool from a passive savings account into an active hedge fund strategy.
+> Because Stability Pool exposure is deliberately unoptimized, yield extraction shifts away from the protocol layer and into external structuring. The protocol provides raw risk; refinement occurs elsewhere. This separation preserves core invariants at the cost of user-level complexity.
 
 When BOLD trades below $1, redemptions spike → low-rate borrowers get hit → survivors raise rates → yield increases → SP deposits become more attractive → buying pressure on BOLD. The peg defense is endogenous.
 ![Yield Flowchart](yield_flowchart.png)
@@ -92,7 +98,7 @@ The rate auction creates an obvious attack vector: frontrun redemptions by spiki
 
 The system doesn't try to prevent gaming. It taxes it into unprofitability.
 
-> **Builder Opportunity (Rate Management):** The protocol provides batch delegation as a primitive, but no one operates it at scale yet. The opportunity is two-layered: (1) **Batch Manager Operators** — professional entities who attract delegators, manage rates, and charge fees for the service; (2) **Autonomous Rate Managers (ARMs)** — algorithmic contracts that optimize redemption-protection vs. interest-cost in real-time. The killer product combines both: a Batch Manager powered by an ARM, creating a "set-and-forget" borrowing experience.
+> This, in turn, creates pressure for delegated rate management: coordination layers that internalize redemption risk and amortize rate-setting overhead across borrowers. Rate optimization becomes a service, not a user task.
 
 ## Current State: January 2026
 
@@ -106,7 +112,9 @@ The numbers tell an interesting story:
 
 This raises the obvious question: who captures the value? Unlike V1, revenue does not flow to token holders. It flows to **`Stability Pool`** depositors and PIL.
 
-LQTY holders don't receive direct dividends; instead, they monetize **governance influence**: directing PIL emissions creates a market for **"bribes"** (vote incentives).The "profitability" is measured in influence value, not dividends
+LQTY holders don't receive direct dividends; instead, they monetize **governance influence**: directing PIL emissions creates a market for **"bribes"** (vote incentives).The "profitability" is measured in influence value, not dividends.
+
+**Binding constraint:** borrower pain — yield is generated only by exposing borrowers to redemption risk; removing that pain collapses the yield mechanism.
 
 ---
 
@@ -130,7 +138,7 @@ The "headless brand" model is fully operational. With **63+ independent frontend
 - *Verdict:* **Low Risk.** Censorship resistance is provided by a mercenary network of operators.
 
 ![Frontend Shares](frontend_shares.png)
-> **Builder Opportunity:** Liquity is immutable and permissionless — anyone can build a frontend. White-label borrowing interfaces for niche communities (e.g., restaking DAOs, LST providers) can capture origination volume.
+> Because the protocol is immutable and permissionless, interface provision is decoupled from protocol governance. Origination, distribution, and user segmentation occur entirely at the edge, not the core. Frontends compete on access, trust, and specialization without introducing protocol-level dependencies. This preserves censorship resistance while allowing market-driven interface differentiation.
 
 ### 3. Emergency (E): Gold (Unstoppable)
 
@@ -151,15 +159,17 @@ This is the fault line.
 > **Concentration Risk (HHI): 0.56 (High)**
 > *Calculated: $0.72^2 (\text{wstETH}) + 0.16^2 (\text{WETH}) + 0.12^2 (\text{rETH}) \approx 0.56$. Any score $>0.25$ indicates high concentration.*
 
-Under the DeFiScan framework, this **External Dependency** prevents a perfect score. The **`Standard`** architecture is robust, but the **`Assets`** are administratively upgradable.
+Under the DeFiScan framework, this **External Dependency** defines the system’s ceiling. The **`Standard`** architecture is robust, but the **`Assets`** are administratively upgradable.
 
-Put together, the classification is clear: **Stage 2 (Immutable Core)**.
+Liquity V2 is an immutable engine running on upgradable collateral. The protocol itself cannot be captured or shut down, but its solvency depends on external LST systems whose governance Liquity does not control.
 
-> *Definition: "Stage 2" implies a system where the protocol is effectively immutable and unshutdownable, ensuring permissionless access and exit. However, Liquity V2 presents a unique edge case: an immutable engine running on upgradable collateral assets.*
+This is not a design flaw. It is the explicit trade-off that enables multi-collateral scalability without reintroducing contagion.
 
 The engine is immutable.
-The fuel is upgradeable.
-And the strict isolation between them is where Liquity V2 finds its balance.
+The fuel is externally governed.
+And the boundary between them is the system’s only remaining point of trust.
+
+**Binding constraint:** collateral governance — Liquity V2’s solvency depends on externally governed LST systems whose upgrade paths, slashing rules, and parameter changes lie outside the protocol’s control.
 
 ---
 
@@ -176,22 +186,20 @@ Compare to Maker's risk profile:
 
 Maker's counterparty risk is *jurisdictional* — tied to TradFi entities that can be sanctioned, seized, or bankrupted. Liquity's counterparty risk is *technical* — tied to code that can be exploited or oracle-manipulated. Neither is zero. But technical risk is auditable, immutable, and transparent. Jurisdictional risk is none of these.
 
-V1 avoided this entirely by accepting only native ETH. V2 trades maximum decentralization for multi-asset scalability
+V1 avoided this entirely by accepting only native ETH. V2 trades maximum decentralization for multi-asset scalability.
+
 ---
 
 ## The Bottom Line
 
-Liquity V2 is the first stablecoin to solve the multi-collateral contagion problem structurally — not through governance, not through insurance, but through architecture. **Federated Solvency** is not a marketing term. It's a design pattern that creates real, mathematically-enforced risk isolation. No other multi-collateral stablecoin can make this claim.
+Liquity V2 does not optimize for capital efficiency, governance flexibility, or growth velocity. It optimizes for one thing: **failure containment**. Federated solvency is not a feature layered onto an existing system; it is the organizing principle that determines every trade-off the protocol makes. Capital efficiency is sacrificed to eliminate shared failure modes. Redemption certainty is sacrificed to preserve systemic isolation. Governance flexibility is sacrificed to prevent discretionary intervention.
+This is not a design that maximizes upside. It is a design that minimizes regret.
 
-The trade-offs are explicit:
+Liquity V2 reveals a deeper truth about stablecoin infrastructure: once a system is exposed to multiple collateral types, the dominant risk is not price volatility, oracle failure, or user behavior. It is contagion. And contagion cannot be patched — it must be architected around.
 
-- **Redemption uncertainty** for risk isolation
-- **LST dependency** for multi-asset scalability
-- **Complexity** for modular solvency
+The result is an immutable engine running on externally governed collateral, with strict isolation between the two. That boundary is Liquity’s ceiling, and also its defense.
 
-Liquity V2 isn't just "multi-collateral done better." It's a new paradigm: **federated solvency** that makes contagion a choice, not a feature.
-
-In a space where most protocols optimize for TVL velocity, Liquity V2 optimizes for **longevity**. That's the kind of alpha that compounds quietly — until it doesn't need to anymore.
+In a space that repeatedly mistakes efficiency for robustness, Liquity V2 chooses survivability.
 
 ---
 
