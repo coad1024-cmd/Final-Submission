@@ -144,7 +144,7 @@ where:
 
 ### Stability & Equilibrium
 
-Gyroscope's analysis proves that for $n \ge 2$, this curve establishes a **stable equilibrium** that dampens runs [1, §5.2].
+Gyroscope's analysis proves that for $n \ge 2$, this curve establishes a **stable equilibrium** that dampens runs.
 
 * **Rational Actors:** As $Q_t$ rises, the immediate cost of exit (slippage) increases.
 * **Negative Feedback:** High penalties discourage panic redemptions, unlike linear curves ($n=1$) or flat queues which can accelerate runs.
@@ -176,8 +176,6 @@ We simulated different (k, n) combinations to minimize liquidity drain during pa
 
 ---
 
-**References:**
-[1] Gyroscope Protocol. "P-AMM: A Path-Dependent Automated Market Maker." Technical Paper, 2023.
 
 ## The Contrast: Volatile vs. Non-Volatile
 
