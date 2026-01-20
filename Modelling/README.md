@@ -1,4 +1,4 @@
-# Attack Profitability Analysis
+# Quantitative Risk & Attack Analysis
 
 *A quantitative analysis of profitable de-pegging strategies against dual-token systems*
 
@@ -6,63 +6,37 @@
 
 ## Overview
 
-This modelling study quantifies the economic feasibility of attacking algorithmic stablecoins. The analysis uses the DualTokenSim framework ([Calandra et al., 2024](https://ieeexplore.ieee.org/document/11114693)) to determine when de-peg attacks become profitable.
+This modelling study quantifies the economic feasibility of attacking algorithmic stablecoins. The analysis uses the DualTokenSim framework to determine when de-peg attacks become profitable.
 
 **Key Finding:** Algorithmic stablecoins backed by endogenous collateral are structurally exploitable. A sufficiently capitalized adversary can profitably attack these systems by combining a trigger mechanism (selling stablecoins) with a capture mechanism (shorting the collateral token).
 
 ---
 
-## Contents
+## Research Stack
 
-### [1. Theoretical Foundation](01_Theory.md)
+### [1. Foundations & Methodology](01_Foundations.md)
 
-- The Dual-Token Mechanism
-- The Death Spiral
-- The Attacker's Position
+* The Dual-Token Mechanism & Death Spiral Theory
+* Simulation Framework & Architecture
+* The Profitability Hypothesis (Trigger Cost vs Short Profit)
 
-### [2. Simulation Framework](02_Framework.md)
+### [2. Market Simulations](02_Market_Simulation.md)
 
-- The Three-Pool Architecture  
-- Simulation Parameters
-- Core Components (Tokens, Pools, Arbitrage, Trading)
+* Baseline Attack Experiments
+* Liquidity Sensitivity (The "Paradox")
+* Curve vs Uniswap
+* Gaussian vs Hawkes (Fat Tails)
 
-### [3. Experimental Results](03_Experiments.md)
+### [3. Attack Analysis](03_Attack_Analysis.md)
 
-- Visual Evidence
-- Experiment 1: Raw Dump (Baseline)
-- Experiment 2: Short + Dump (Soros Strategy)
-- Experiment 3: Maximum Leverage
-- Sensitivity Analysis
+* Attack Economics (Trigger vs Capture)
+* The "Infinite Money Glitch" (Redemption Attack)
+* Profitability Heatmaps
 
-### [4. Pool Size Sensitivity](04_Pool_Sensitivity.md)
+### [4. Conclusions](04_Conclusion.md)
 
-- Hypothesis: Liquidity as Defense
-- Experimental Design
-- Results
-
-### [5. Conclusions](05_Conclusions.md)
-
-- Key Findings
-- Model Limitations
-- Strategic Implications
-
----
-
-## Quick Reference
-
-| Experiment | Short Position | Net PnL | ROI |
-|:-----------|---------------:|--------:|----:|
-| Raw Dump | $0 | −$87M | — |
-| Short + Dump | $300M | +$68M | 23% |
-| Max Leverage | $1B | +$411M | 41% |
-
----
-
-## References
-
-- **IEEE Paper:** [Calandra et al., 2024](https://ieeexplore.ieee.org/document/11114693)
-- **Original Simulator:** [DualTokenSim](https://github.com/FedericoCalandra/DualTokenSim)
-- **Attack Fork:** [Research Repository](https://github.com/coad1024-cmd/Stablecoin_Research/tree/main/challenge-research-coad1024/Algo-Attack-Model)
+* Unified Theory of Failure
+* Strategic Recommendations
 
 ---
 
@@ -70,6 +44,6 @@ This modelling study quantifies the economic feasibility of attacking algorithmi
 
 | [Previous] | Home | [Next] |
 |:---|:---:|---:|
-| [Non-Volatile Collateral Design](../Design/Non-Volatile.md) | [Table of Contents](../README.md) | — |
+| [Non-Volatile Design](../Design/Non-Volatile.md) | [Table of Contents](../README.md) | [1. Foundations →](01_Foundations.md) |
 
 </div>
