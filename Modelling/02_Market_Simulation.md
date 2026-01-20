@@ -110,4 +110,10 @@ We compared standard random-walk market noise (Gaussian) vs. self-exciting volat
 
 ---
 
-[← Back to Index](README.md) | [Previous: Foundations ←](01_Foundations.md) | [Next: Attack Analysis →](03_Attack_Analysis.md)
+<div align="center">
+
+| [Previous] | Home | [Next] |
+| :--- | :---: | ---: |
+| [1. Foundations](01_Foundations.md) | [Table of Contents](../README.md) | [3. Attack Analysis →](03_Attack_Analysis.md) |
+
+</div>

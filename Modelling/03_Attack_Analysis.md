@@ -51,4 +51,10 @@ Dual-token systems are **structurally exploitable**. The mechanism that maintain
 
 ---
 
-[← Back to Index](README.md) | [Previous: Market Simulations ←](02_Market_Simulation.md) | [Next: Conclusions →](04_Conclusion.md)
+<div align="center">
+
+| [Previous] | Home | [Next] |
+| :--- | :---: | ---: |
+| [2. Market Simulations](02_Market_Simulation.md) | [Table of Contents](../README.md) | [4. Conclusions →](04_Conclusion.md) |
+
+</div>

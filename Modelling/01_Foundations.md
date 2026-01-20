@@ -124,4 +124,10 @@ This research focuses exclusively on quantifying these variables:
 
 ---
 
-[← Back to Index](README.md) | [Next: Market Simulations →](02_Market_Simulation.md)
+<div align="center">
+
+| [Previous] | Home | [Next] |
+| :--- | :---: | ---: |
+| [Modelling Overview](README.md) | [Table of Contents](../README.md) | [2. Market Simulations →](02_Market_Simulation.md) |
+
+</div>

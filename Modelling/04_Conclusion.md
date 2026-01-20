@@ -50,4 +50,10 @@ Future designs must prioritize **Solvency Invariants** (Backing) over **Capital 
 
 ---
 
-[← Back to Index](README.md) | [Previous: Attack Analysis ←](03_Attack_Analysis.md)
+<div align="center">
+
+| [Previous] | Home | [Next] |
+| :--- | :---: | ---: |
+| [3. Attack Analysis](03_Attack_Analysis.md) | [Table of Contents](../README.md) | — |
+
+</div>
