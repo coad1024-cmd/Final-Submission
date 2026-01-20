@@ -23,7 +23,7 @@
 
 A crypto-collateralized stablecoin lives or dies on one inequality. Let $P_t$ denote the price of the reserve asset, $C_t$ the collateral quantity, and $D_t$ the outstanding liability. The system is solvent if and only if
 
-$$C_t P_t \ge D_t \tag{1}$$
+$$C_t P_t \ge D_t$$
 
 This must hold **on-chain**, **deterministically**, and **without discretion**. Peg stability is cosmetic. Solvency is structural. Any design that violates this condition, even briefly, is insolvent regardless of governance intent or recovery plans.
 
@@ -42,7 +42,7 @@ Instead of issuing a single claim against volatile collateral, the system issues
 
 Both sit on the same collateral pool. At all times, the accounting identity holds:
 
-$$V_A(t) + V_B(t) = \frac{C_t P_t}{\beta_t} \tag{2}$$
+$$V_A(t) + V_B(t) = \frac{C_t P_t}{\beta_t}$$
 
 where $\beta_t$ is a conversion factor updated after payouts and resets.
 
@@ -62,7 +62,7 @@ This is not a modeling convenience. It is the mechanism by which volatility is c
 
 Stability here is not defined as “market price ≈ $1.” It is defined as **deterministic redemption under strict priority rules**. The enforced invariant is
 
-$$C_t P_t \ge N_A V_A(t) + N_B V_B(t) \tag{3}$$
+$$C_t P_t \ge N_A V_A(t) + N_B V_B(t)$$
 
 where $N_A$ and $N_B$ are the outstanding supplies of the two tranches.
 
@@ -70,7 +70,7 @@ As long as this holds, redemptions clear mechanically. If it fails, the system l
 
 Between reset events the two claims evolve asymmetrically. The senior claim accrues slowly. The junior claim inherits amplified exposure to $P_t$. The instantaneous leverage of the junior tranche is
 
-$$\lambda_t = 1 + \frac{V_A}{V_B} \tag{4}$$
+$$\lambda_t = 1 + \frac{V_A}{V_B}$$
 
 As drawdowns occur and $V_B$ shrinks, leverage rises automatically. This is not a flaw. It is the cost of insulating the senior claim from day-to-day volatility.
 

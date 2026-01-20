@@ -187,6 +187,6 @@ The real question is whether future systems can escape the same gravitational pu
 
 | [Previous] | Home | [Next] |
 |:---|:---:|---:|
-| [Liquity V2 (BOLD)](../Liquity-final/Liquity-Research.md) | [Table of Contents](../README.md) | [Terra (UST)](../Terra-final/Terra_Sustainability_DeepDive.md) |
+| [Liquity V2 (BOLD)](../Liquity-final/Liquity-Research.md) | [Table of Contents](../README.md) | [Volatile Design](../Design/Volatile.md) |
 
 </div>

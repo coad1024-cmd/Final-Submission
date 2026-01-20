@@ -37,11 +37,11 @@
 
 Let the reserve's market price be constant and normalized:
 
-$$P_t \equiv 1 \quad (\sigma^2 = 0) \tag{1}$$
+$$P_t \equiv 1 \quad (\sigma^2 = 0)$$
 
 Under this assumption, the solvency constraint simplifies from $C_t P_t \ge D_t$ to:
 
-$$C_t \ge D_t \tag{2}$$
+$$C_t \ge D_t$$
 
 This is the **only** simplification. It removes mark-to-market insolvency: nominal backing equals face value. But it does not guarantee that the protocol can *deliver* that reserve to redeeming users in the timeframe they demand.
 
