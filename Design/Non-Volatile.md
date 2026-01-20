@@ -176,7 +176,6 @@ We simulated different (k, n) combinations to minimize liquidity drain during pa
 
 ---
 
-
 ## The Contrast: Volatile vs. Non-Volatile
 
 | Dimension | Volatile Collateral | Non-Volatile Collateral |
@@ -224,6 +223,6 @@ When the reserve stops moving, the design must start working.
 
 | [Previous] | Home | [Next] |
 |:---|:---:|---:|
-| [Volatile Collateral Design](Volatile.md) | [Table of Contents](../README.md) | — |
+| [Volatile Collateral Design](Volatile.md) | [Table of Contents](../README.md) | [Part III: Modelling](../Modelling/README.md) |
 
 </div>

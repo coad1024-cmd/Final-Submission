@@ -40,24 +40,17 @@ Quantitative analysis of attack economics using the DualTokenSim framework.
 | Document | Description |
 |:---------|:------------|
 | [Modelling Index](Modelling/README.md) | Overview and navigation |
-| [Theoretical Foundation](Modelling/01_Theory.md) | Death spiral mechanics and attacker economics |
-| [Simulation Framework](Modelling/02_Framework.md) | DualTokenSim architecture and components |
-| [Experimental Results](Modelling/03_Experiments.md) | Attack scenarios and profitability analysis |
-| [Pool Size Sensitivity](Modelling/04_Pool_Sensitivity.md) | Liquidity depth as defense mechanism |
-| [Curve vs Uniswap](Modelling/05_Curve_Comparison.md) | Impact of AMM bonding curve choice |
-| [Hawkes Process Risk](Modelling/06_Hawkes_Comparison.md) | Impact of self-exciting market volatility |
-| [Redemption Attack](Modelling/07_Redemption_Attack.md) | **"The Death Spiral"** - Exploiting solvency mechanism |
-| [Robustness Design](Modelling/09_Robustness_Design.md) | **"The Defense"** - Exogenous Backing (ETH) simulation |
-| [cadCAD Validation](Modelling/11_cadCAD_Validation.md) | **Independent Verification** of Death Spiral |
-| [Conclusions](Modelling/10_Conclusions.md) | Key findings and design recommendations |
+| [1. Foundations](Modelling/01_Foundations.md) | Attack Theory, Mechanism Design, and Profitability Hypothesis |
+| [2. Market Simulations](Modelling/02_Market_Simulation.md) | Baseline Attacks, Liquidity Sensitivity, and Curve vs Uniswap |
+| [3. Attack Analysis](Modelling/03_Attack_Analysis.md) | **"The Infinite Money Glitch"** - Trigger vs Capture Economics |
+| [4. Conclusions](Modelling/04_Conclusion.md) | Unified Theory of Failure and Strategic Recommendations |
 
 ---
 
 ## 🏛️ Project Artifacts
 
-- **[Executive Summary](Final_Deliverables/Stablecoin_Research_Executive_Summary.md)**: High-level findings for stakeholders.
-- **[Technical Report](Final_Deliverables/Stablecoin_Technical_Report.md)**: Detailed engineering specifications and backing mechanisms.
-- **[Research Paper](Final_Deliverables/Stablecoin_Research_Paper.md)**: Academic synthesis of findings.
+- **[Liquity V2 (BOLD)](Liquity-final/Liquity-Research.md)**: Analysis of the BOLD mechanics and decentralized borrowing.
+- **[Sky (MakerDAO)](Sky-final/Sky-Research.md)**: Research on the Sky Ecosystem and USDS stablecoin.
 
 ---
 
