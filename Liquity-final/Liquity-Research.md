@@ -203,14 +203,6 @@ In a space that repeatedly mistakes efficiency for robustness, Liquity V2 choose
 
 ---
 
-## References
-
-1. Liquity V2 Technical Documentation (2025)
-2. DefiLlama Protocol Analytics
-3. Wonderland Research — Stablecoin Decentralization Framework v3.0
-
----
-
 <div align="center">
 
 | [Previous] | Home | [Next] |
