@@ -174,15 +174,6 @@ The real question is whether future systems can escape the same gravitational pu
 
 ---
 
-## References
-
-1. Sky Ecosystem Technical Documentation (2026)
-2. DefiLlama Protocol Analytics
-3. Wonderland Research — Stablecoin Sustainability Framework v1.0
-4. Wonderland Research — Stablecoin Decentralization Framework v3.0
-
----
-
 <div align="center">
 
 | [Previous] | Home | [Next] |
