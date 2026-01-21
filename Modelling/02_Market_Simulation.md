@@ -2,7 +2,21 @@
 
 ## 1. Baseline Attack Experiments
 
-We simulated a "Death Spiral" attack triggered by a large stablecoin sell event (Dump). The goal was to observe the **deterministic collapse** of the system once the "unlimited mint" function is triggered.
+We simulated a "**Death Spiral**" using the `DualTokenSim` framework. The simulation isolates the economic feedback loops by modeling two primary agents interacting over 50-100 discrete time steps.
+
+### Simulation Strategy
+
+The experiment follows a deterministic execution flow to test system resilience:
+
+1. **The Agents:**
+    * **Attacker:** An adversary with significant capital ($1B+) capable of executing large trades (Dumping AS) and opening leveraged short positions on the collateral (CT).
+    * **Arbitrageur:** A rational profit-maximizer who monitors the peg. If $P_{AS} < \$1.00$, they buy AS, redeem it for $\$1.00$ of CT, and immediately sell CT.
+
+2. **Execution Flow:**
+    * **Phase 1: The Trigger (Step 10):** The Attacker executes a massive sell order (e.g., 500M AS) into the liquidity pool. This incurs a "Trigger Cost" (slippage) but pushes the price below the peg (e.g., to $0.90).
+    * **Phase 2: The Response (Steps 11-20):** Arbitrageurs step in. They buy cheap AS and redeem it. The protocol mints new CT to cover redemptions.
+    * **Phase 3: The Death Spiral (Steps 21+):** The selling of newly minted CT crushes the collateral price. Lower CT price means *more* CT must be minted for the next redemption ($1/P_{CT}$). Supply becomes asymptotic.
+    * **Phase 4: The Capture:** The Attacker closes their CT short position to realize profit from the collapse.
 
 ### Visual Evidence: The Anatomy of a Crash
 
@@ -22,10 +36,10 @@ Does the attacker make money? We modeled three distinct strategies.
 *Fig 3: Cumulative PnL of a "Max Leverage" attacker. The initial drop is the cost of dumping AS (slippage loss). The subsequent rise is the profit from the CT short position.*
 
 | Experiment | Strategy | Short Size | Net PnL | Outcome |
-|:-----------|:---------|-----------:|--------:|:--------|
+| :----------- | :--------- | -----------: | --------: | :-------- |
 | **1. Raw Dump** | Sell 500M AS | $0 | **-$87M** | Attack succeeds, but attacker loses money (slippage). |
-| **2. Soros** | Short + Dump | $300M | **+$68M** | Profitable. Short side captures the volatility. |
-| **3. Max Lev** | Max Exposure | $1B | **+$411M** | Profit scales linearly with leverage. Trigger cost is fixed. |
+| **2. Soros** | Short 300M CT + Dump 500M AS | $300M | **+$68M** | Profitable. Short side captures the volatility. |
+| **3. Max Lev** | Short 1B CT + Dump 500M AS | $1B | **+$411M** | Profit scales linearly with leverage. Trigger cost is fixed. |
 
 **Key Insight:** The attack has a fixed entry cost (the dump) and variable upside (the short).
 
