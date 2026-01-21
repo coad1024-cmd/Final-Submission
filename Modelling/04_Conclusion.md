@@ -6,19 +6,16 @@ This research rigorously tested the stability of Dual-Token Algorithmic Stableco
 
 ### Key Findings
 
-#### 1. The Structure is the Vulnerability
+#### 1. The Asymmetric Risk Profile
 
-Our **Hawkes Process** experiments proved that market volatility is self-exciting (bursty).
+Our **Profitability Analysis** (Soros & Max Lev) proved that the protocol suffers from a fatal asymmetry:
 
-* **Implication:** A protocol stable under Gaussian assumptions will collapse spontaneously when volatility clusters. "Black Swans" are internal properties of the market structure.
+* **Attacker's Cost:** Fixed (The "Trigger Cost" to dump AS).
+* **Attacker's Reward:** Uncapped (Scales with Short Size & Leverage).
 
-#### 2. The Mechanism is the Weapon
+* **Implication:** A sufficiently capitalized attacker is *guaranteed* a profitable attack vector. The defense (buying back the peg) is expensive, while the attack becomes relatively cheaper as the collateral collapses.
 
-Our **Redemption Attack** demonstrated that the "Solvency Mechanism" (printing CT to save AS) is the exact engine of destruction.
-
-* **Implication:** The "Death Spiral" is a deterministic arbitrage loop. Once profitable, it runs to completion (Zero).
-
-#### 3. Better Math Can't Fix Bad Economics
+#### 2. Better Math Can't Fix Bad Economics
 
 Our **Curve vs Uniswap** experiment showed that AMM choice affects the *shape* of the collapse but not the *outcome*.
 

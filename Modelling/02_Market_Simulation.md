@@ -20,13 +20,21 @@ The experiment follows a deterministic execution flow to test system resilience:
 
 ### Visual Evidence: The Anatomy of a Crash
 
-The following charts visualize the system state over 50 simulation steps (approximately 4 hours of panic).
+The simulation runs for 1,000 steps. The charts below **zoom in on a 50-step window** (Steps 100–150) to visualize the acute phase of the panic.
 
 ![Stablecoin De-Peg](images/stablecoin_price_depeg.png)
 *Fig 1: The Stablecoin (AS) peg breaks immediately under selling pressure. The 'Arbitrage' attempts to fix it by printing CT, but fails.*
 
 ![Collateral Collapse](images/collateral_collapse_subplots.png)
 *Fig 2: The Death Spiral. As AS is redeemed, CT supply (Top Right) goes vertical. This hyper-inflation causes CT price (Top Left) to collapse to near-zero.*
+
+### Post-Mortem System State (Max Leverage Scenario)
+
+The simulation confirms a catastrophic state for the collateral token, driven by the death spiral mechanism:
+
+* **Final CT Supply:** `21.61B` (Inflated ~62x from initial 345M)
+* **Final CT Price:** `$0.0005` (Collapsed >99.9%)
+* **Final AS Price:** `$0.80` (Zombie State: Liquidity drained, peg broken)
 
 ### Attacker Performance
 
@@ -37,11 +45,22 @@ Does the attacker make money? We modeled three distinct strategies.
 
 | Experiment | Strategy | Short Size | Net PnL | Outcome |
 | :----------- | :--------- | -----------: | --------: | :-------- |
-| **1. Raw Dump** | Sell 500M AS | $0 | **-$87M** | Attack succeeds, but attacker loses money (slippage). |
-| **2. Soros** | Short 300M CT + Dump 500M AS | $300M | **+$68M** | Profitable. Short side captures the volatility. |
-| **3. Max Lev** | Short 1B CT + Dump 500M AS | $1B | **+$411M** | Profit scales linearly with leverage. Trigger cost is fixed. |
+| **1. Raw Dump** | Sell 500M AS | $0 | **-$100M** | Attack succeeds, but attacker loses money (slippage). |
+| **2. Soros** | Short 300M CT + Dump 500M AS | $300M | **+$161M** | Profitable. Short side captures the volatility. |
+| **3. Max Leverage** | Short 1B CT + Dump 500M AS | $1B | **+$566M** | Profit scales linearly with leverage. Trigger cost is fixed. |
 
 **Key Insight:** The attack has a fixed entry cost (the dump) and variable upside (the short).
+
+> [!NOTE]
+> **Why "Millions" and not "Billions"?**
+> PnL is capped by the *notional size* of the short position. In the "Soros" strategy:
+>
+> * **Gross Profit:** ~\$300M (Shorting \$300M worth of CT -> \$0).
+> * **Entry Slippage:** ~\$39M (Price impact when opening the short).
+> * **Trigger Cost:** ~\$100M (Loss on the AS Dump to break the peg).
+> * **Net Profit:** **\$161M**.
+>
+> To make billions (Strategy 3), the attacker must use high leverage to open a position larger than their capital (e.g., Shorting \$1B+).
 
 ---
 
@@ -85,42 +104,20 @@ Where $A$ is the amplification coefficient, determining how "flat" the curve is.
 ![Curve vs Uniswap](images/curve_vs_uniswap.png)
 *Fig 5: Price defense comparison. Curve (Blue) holds the peg longer but crashes harder.*
 
-| Pool Type | Trigger Cost | Min AS Price | Net PnL |
-|:----------|-------------:|-------------:|--------:|
-| **Uniswap** | $32.2M | $0.90 | -$14.9M |
-| **Curve (A=10)** | $31.4M | $0.89 | -$30.9M |
-| **Curve (A=100)** | $29.5M | $0.89 | -$28.7M |
-| **Curve (A=500)** | $29.6M | $0.89 | -$27.5M |
+| Metric | Uniswap V2 (Baseline) | Curve (StableSwap) | Impact |
+| :--- | :--- | :--- | :--- |
+| **Dump Size** | 500M AS | 500M AS | Constant |
+| **Trigger Cost** | **$101M (Slippage)** | **$216M (Slippage)** | **Curve is Harder to Break** (High Slippage) |
+| **Min AS Price** | $0.64 | **$0.02** | **Curve Crashes Harder** (The Cliff) |
+| **Net PnL** | -$83M | **-$140M** | Attacker loses more on Curve. |
 
 **Mechanism Analysis:**
 
-1. **Lower Trigger Cost:** Flatter curve = less slippage. It is *cheaper* to dump AS on Curve.
-2. **Protected Collateral:** Because the AS price holds closer to $1.00 for longer, fewer redemptions occur. The death spiral *failed to ignit* fully.
-3. **Zombie State:** AS price fell off the "cliff" to $0.88 and stayed there. The protocol entered a "Zombie State"—permanently de-pegged but not dead.
+1. **The "Cliff" Effect:** Curve's StableSwap invariant concentrates liquidity around \$1.00. While this resists small deviations, a massive shock (500M Dump) pushes the pool into the steep part of the curve, causing **higher slippage** (\$216M vs \$101M) than Uniswap.
+2. **Fragility Beyond the Peg:** Once the attacker exhausts the concentrated liquidity, the price does not just slide; it collapses. AS price hit **\$0.02** on Curve versus $0.64 on Uniswap.
+3. **Security Conclusion:** Curve provides better stability against minimal volatility but is **more fragile** against catastrophic solvency attacks. The "Trigger Cost" to break the peg is higher, but the failure mode is more severe.
 
-**Verdict:** Curve prevents total zero-collapse but traps the protocol in a permanent de-pegged state that is arguably worse (loss of confidence without resolution).
-
----
-
-## 4. Market Dynamics: Gaussian vs Hawkes
-
-We compared standard random-walk market noise (Gaussian) vs. self-exciting volatility (Hawkes Process) to test "Spontaneous Failure".
-
-### Findings: The Hidden Risk
-
-![Hawkes vs Gaussian](images/hawkes_vs_gaussian.png)
-*Fig 6: Simulation of collateral price under Gaussian (Blue) vs Hawkes (Orange) volatility models.*
-
-* **Gaussian:** Protocol handles 6-sigma events easily. Mean-reversion stabilizes the peg.
-* **Hawkes:** A small dip triggers panic selling (intensity spike).
-  * **Phase Transition:** The feedback loop creates a "volatility explosion".
-  * **Result:** The protocol drained to zero *spontaneously* without an attacker.
-
-**Implication:** Protocols stable under Normal distributions can fail catastrophically under Fat-Tailed conditions. "Black Swans" are internal properties of the market structure.
-
----
-
-[← Back to Index](README.md) | [Previous: Foundations ←](01_Foundations.md) | [Next: Attack Analysis →](03_Attack_Analysis.md)
+**Verdict:** Curve's concentrated liquidity acts as a dam: effective at holding back normal volatility, but catastrophic when breached. For an algorithmic stablecoin relying on arbitrage confidence, this **binary failure mode** (Pegged vs. Dead) is riskier than Uniswap's gradual price decay.
 
 ---
 

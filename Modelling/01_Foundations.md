@@ -7,17 +7,17 @@ A dual-token algorithmic stablecoin consists of two assets:
 - **Stablecoin (AS):** Target price fixed at $1, backed by the promise of redemption.
 - **Collateral Token (CT):** A volatile endogenous asset used to absorb demand shocks.
 
-The peg is maintained through a mint-burn facility: 1 AS can always be redeemed for $1 worth of CT at oracle price. When AS trades below peg, arbitrageurs burn AS to mint CT, contracting stablecoin supply and (theoretically) restoring the peg.
+The peg is maintained through a mint-burn facility: 1 **AS** can always be redeemed for $1 worth of **CT** at oracle price. When **AS** trades below peg, arbitrageurs burn **AS** to mint **CT**, contracting stablecoin supply and (_theoretically_) restoring the peg.
 
 ### The Death Spiral Mechanism
 
 When confidence erodes, the redemption mechanism becomes reflexive:
 
 1. **AS** price falls below peg.
-2. Redemptions accelerate (Arbitrageurs burn AS for CT).
-3. **CT** supply inflates (each redemption mints new CT).
+2. Redemptions accelerate (Arbitrageurs burn **AS** for **CT**).
+3. **CT** supply inflates (each redemption mints new **CT**).
 4. **CT** price collapses (supply inflation exceeds demand).
-5. Redemption value falls (CT is worth less).
+5. Redemption value falls (**CT** is worth less).
 6. Confidence collapses further.
 
 This is the **death spiral**—a positive feedback loop where the mechanism designed to stabilize the peg instead accelerates its destruction.
@@ -46,13 +46,13 @@ The experiments build on `DualTokenSim`, modeling a three-pool architecture:
 2. **Pool 2 (CT/USD):** Market price discovery for the collateral token.
 3. **Virtual Pool (Mint-Burn):** The protocol's redemption mechanism.
 
-**Critical Dynamic:** The Virtual Pool enforces the peg by allowing 1 AS to be burned for $1 of CT. This mints new CT, expanding supply.
+**Critical Dynamic:** The **Virtual Pool** enforces the peg by allowing 1 **AS** to be burned for $1 of **CT**. This mints new **CT**, expanding supply.
 
 ### Core Components
 
 #### 1. The Virtual Liquidity Pool (The Mechanism)
 
-The "Solvency Mechanism" that burns AS to mint CT. It behaves like an AMM that *must* provide liquidity at the oracle price, regardless of market conditions.
+The "**Solvency Mechanism**" that burns **AS** to mint **CT**. It behaves like an AMM that _must_ provide liquidity at the oracle price, regardless of market conditions.
 
 ```python
 def redeem_stablecoin(amount_as):
@@ -92,7 +92,7 @@ def calculate_sell_pressure(confidence):
 
 ### System Parameters (Pre-Crash)
 
-> **Note:** These parameters are modeled after the **Terra/Luna** state circa May 7, 2022, just prior to the de-peg event.
+> **Note:** These parameters are modeled after the **Terra/Luna** state circa May 7, 2022, just prior to the [de-peg event](https://www.sciencedirect.com/science/article/abs/pii/S1544612322005359).
 
 | Token | Initial Price | Total Supply | Pool Liquidity |
 |:------|:-------------:|:------------:|:--------------:|
@@ -117,8 +117,8 @@ $$ \text{Net Profit} = (\text{Short Position} \times \Delta \text{Price}_{CT}) -
 
 This research focuses exclusively on quantifying these variables:
 
-1. **Trigger Cost:** Effect of pool depth and AMM curves on the cost to crash AS.
-2. **Short Capture:** The ROI of shorting CT during the deterministic collapse.
+1. **Trigger Cost:** Effect of pool depth and AMM curves on the cost to crash **AS**.
+2. **Short Capture:** The ROI of shorting **CT** during the deterministic collapse.
 
 **Conclusion:** We do not seek to fix the system. We seek to demonstrate that it is economically rational to destroy it.
 

@@ -1,7 +1,19 @@
 # Stablecoin Research: Final Submission Portfolio
 
 **Date**: January 2026
-**Subject**: Comparative Analysis of Decentralized & Hybrid Solvency Models
+**Subject**: Stablecoin Research Challenge: Analysis, Design & Attack Modelling
+
+---
+
+## 📌 Challenge Alignment
+
+This portfolio addresses **Option 2: Stablecoins** of the Research Challenge.
+
+| Challenge Requirement | Submitted Module | Description |
+| :--- | :--- | :--- |
+| **2a. Analysis** | Comparative Analysis | Deep dive into Liquity (Decentralized) vs. Sky (Hybrid). |
+| **2b. Design** | Protocol Design (Volatile & Non-Volatile) | Frameworks for both Risky (Crypto) and Risk-Free (Fiat) collateral. |
+| **2c. Modelling** | Attack Simulation | "The Infinite Money Glitch": Modeling an Algorithmic De-Peg. |
 
 ---
 > **Navigation note:**
@@ -48,12 +60,3 @@ Quantitative analysis of attack economics using the DualTokenSim framework.
 | [4. Conclusions](Modelling/04_Conclusion.md) | Unified Theory of Failure and Strategic Recommendations |
 
 ---
-
-## 🏛️ Project Artifacts
-
-- **[Liquity V2 (BOLD)](Liquity-final/Liquity-Research.md)**: Analysis of the BOLD mechanics and decentralized borrowing.
-- **[Sky (MakerDAO)](Sky-final/Sky-Research.md)**: Research on the Sky Ecosystem and USDS stablecoin.
-
----
-
-© 2026 Research Challenge Team

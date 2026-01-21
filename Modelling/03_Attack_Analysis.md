@@ -6,38 +6,25 @@ A rational attacker does not profit from breaking the peg alone. Profit arises f
 
 The attack structure is asymmetric:
 
-* **Trigger (Cost):** Large AS sell. Incurs slippage. Fixed cost.
-* **Capture (Benefit):** CT short position. Gains from collateral collapse. Variable upside (scales with leverage).
+* **Trigger (Cost):** Large **AS** sell. Incurs slippage. Fixed cost.
+* **Capture (Benefit):** Large **CT** short position. Gains from collateral collapse. Variable upside (scales with leverage).
 
 $$\text{Net PnL} = (\text{Short Profit} \times \text{Leverage}) - \text{Trigger Cost}$$
 
 ---
 
-## 2. The Redemption Attack (Infinite Money Glitch)
-
-Beyond speculative shorting, the **Redemption Attack** exploits the protocol's solvency mechanism directly.
-
-### The Mechanism
-
-1. **Trigger:** Dump AS to push price < $0.95.
-2. **Loop:**
-    * Buy AS at discount (e.g., $0.80).
-    * Redeem for $1.00 of CT (Printing new tokens).
-    * Sell CT immediately (Crashing price further).
-    * Repeat.
-
-### Results
-
-* **Hyper-Inflation:** Unlike a passive death spiral, the attacker *forces* redemption. In simulations, CT supply exploded from **345M to >2B** in defined iterations.
-* **Systemic Failure:** CT price goes to **ZERO**. The maximization of "Arbitrage Profit" guarantees the destruction of the collateral.
-
----
-
-## 3. Profitability Frontier (Sensitivity Analysis)
+## 2. Profitability Frontier (Sensitivity Analysis)
 
 We conducted a parameter sweep (Stablecoin Dump Size vs. CT Short Size) to find the breakeven point.
 
 ![PnL Sensitivity Heatmap](images/pnl_heatmap.png)
+<small>*Fig 1: Net PnL Heatmap. X-Axis = Dump Size (Trigger Cost). Y-Axis = Short Size (Potential Reward).*</small>
+
+**Heatmap Analysis:**
+
+* **Red Zone (Bottom Left):** The "Suicide Zone". The attacker dumps **AS** (paying trigger cost) but has an insufficient short position to recover the loss.
+* **Green Zone (Top Right):** The "Profitable Zone". Large short positions (>$500M) easily absorb the fixed cost of the dump, generating massive net profits.
+* **The Threshold:** Profitability begins roughly when `Short Size > 1.5x Dump Size`. This ratio is critical for the attacker's capital planning.
 
 ### Key Observations
 
