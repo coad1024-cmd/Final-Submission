@@ -77,9 +77,8 @@ Unlike conventional multi-collateral frameworks where diversification often lead
 Most stablecoin yield comes from the outside world. Maker's DSR? T-bill returns. Real yield, but also TradFi dependency, regulatory surface, custody risk.
 
 Liquity V2 generates yield **entirely endogenously** — no RWAs, no counterparties, no governance setting rates. The mechanism is **“yield via pain”**: borrower competition over redemption priority is the sole source of yield.
-.
 
-Here's how it works: Borrowers open Troves, lock collateral, and *choose their own interest rate*. Interest accrues simply and (non-compounding), minted as fresh BOLD at the system level.**75% flows to **`Stability Pool`** depositors**; 25% to Protocol Incentivized Liquidity (PIL). Redemptions target lowest-rate Troves first — so borrowers bid rates up to avoid the hit. The **emergent market rate** reflects true leverage cost, no governance required.
+Here's how it works: Borrowers open Troves, lock collateral, and *choose their own interest rate*. Interest accrues simply (non-compounding), **minting** fresh BOLD at the system level. **75% flows to **`Stability Pool`** depositors**; 25% to Protocol Incentivized Liquidity (PIL). Redemptions target lowest-rate Troves first — so borrowers bid rates up to avoid the hit. The **emergent market rate** reflects true leverage cost, no governance required.
 
 Under the hood, the protocol uses a gas-efficient "bucket accumulator" pattern: Troves are grouped by rate tier, and interest accrues lazily via a global index rather than updating each position every block. Debt is only realized when a Trove interacts (closes, adjusts, gets redeemed).
 
@@ -112,7 +111,7 @@ The numbers tell an interesting story:
 
 This raises the obvious question: who captures the value? Unlike V1, revenue does not flow to token holders. It flows to **`Stability Pool`** depositors and PIL.
 
-LQTY holders don't receive direct dividends; instead, they monetize **governance influence**: directing PIL emissions creates a market for **"bribes"** (vote incentives).The "profitability" is measured in influence value, not dividends.
+LQTY holders don't receive direct dividends; instead, they monetize **governance influence**: directing PIL emissions creates a market for **"bribes"** (vote incentives). The "profitability" is measured in influence value, not dividends.
 
 **Binding constraint:** borrower pain — yield is generated only by exposing borrowers to redemption risk; removing that pain collapses the yield mechanism.
 

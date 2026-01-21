@@ -20,7 +20,7 @@ In 2017, Maker was the promise of pure crypto money — DAI backed by ETH, no ba
 
 The "Endgame" restructuring formalized this pivot by spinning out specialized SubDAOs (now "Stars"): **Spark** handles DeFi lending; **Grove** manages RWA partnerships; **Jetstream** builds UIs; **Chronicle** secures oracles. The core protocol focuses purely on monetary policy.
 
-SVB collapsed in March 2023. USDC de-pegged below \$0.90. DAI — backed heavily by USDC via the **`Peg Stability Module`** — traded at $0.90. The message was clear: *depending on Circle's bank relationships is a systemic risk*. Sky's response: **become the bank**. Instead of holding USDC, Sky rotated into direct RWA ownership — first T-Bills via custody partners, then tokenized treasury funds (BlackRock's BUIDL, Superstate's USTB), and most recently Superstate's USCC crypto carry fund (9%+ yields from basis trades, uncorrelated to Fed policy).
+SVB collapsed in March 2023. USDC de-pegged below $0.90. DAI — backed heavily by USDC via the **`Peg Stability Module`** — traded at $0.90. The message was clear: *depending on Circle's bank relationships is a systemic risk*. Sky's response: **become the bank**. Instead of holding USDC, Sky rotated into direct RWA ownership — first T-Bills via custody partners, then tokenized treasury funds (BlackRock's BUIDL, Superstate's USTB), and most recently Superstate's USCC crypto carry fund (9%+ yields from basis trades, uncorrelated to Fed policy).
 
 ---
 
@@ -34,7 +34,7 @@ The diagram traces three critical pipelines: (1) **Collateral ingestion** — us
 
 At the core sits the **`Vat`** — an immutable ledger that tracks every vault's **`Art`** (normalized debt) and **`Ink`** (locked collateral). The solvency invariant is simple: **`Ink × spot ≥ Art × rate`**. When this breaks, the system must seize and liquidate collateral fast enough to cover the debt. If it fails, bad debt accrues.
 
-Black Thursday 2020 showed what failure looks like. ETH crashed 43% in hours, gas spiked to 500+ gwei, and keepers running the old English auction couldn't afford to bid. Result: **\$5.67M of ETH sold for \$0**. The protocol accrued **`Sin`** (bad debt) that the **`Vow`** had to clear through emergency auctions.
+Black Thursday 2020 showed what failure looks like. ETH crashed 43% in hours, gas spiked to 500+ gwei, and keepers running the old English auction couldn't afford to bid. Result: **$5.67M of ETH sold for $0**. The protocol accrued **`Sin`** (bad debt) that the **`Vow`** had to clear through emergency auctions.
 
 ![Black Thursday](black_thursday_scissors.png)
 
